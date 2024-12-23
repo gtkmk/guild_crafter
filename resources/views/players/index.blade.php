@@ -32,5 +32,7 @@
             @endforelse
         </tbody>
     </table>
+
+    {{ $players->links() }}
 </body>
 </html>
