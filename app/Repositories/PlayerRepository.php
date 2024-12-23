@@ -3,13 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Player;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PlayerRepository implements PlayerRepositoryInterface
 {
-    public function all(): Collection
+    public function listPlayersWithPagination(int $perPage = 15): LengthAwarePaginator
     {
-        return Player::all();
+        return Player::paginate($perPage);
     }
 
     public function find(string $id): Player

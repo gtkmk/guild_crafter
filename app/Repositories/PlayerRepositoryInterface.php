@@ -3,11 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Player;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface PlayerRepositoryInterface
 {
-    public function all(): Collection;
+    public function listPlayersWithPagination(int $perPage = 15): LengthAwarePaginator;
     public function find(string $id): Player;
     public function create(array $data): Player;
     public function update(string $id, array $data): Player;

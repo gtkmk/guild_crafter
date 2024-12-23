@@ -19,9 +19,7 @@ class PlayerController extends Controller
 
     public function index()
     {
-        // $players = $this->repository->all();
-
-        $players = Player::paginate();
+        $players = $this->repository->listPlayersWithPagination();
 
         return view('players.index', [
             'players' => $players,
