@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body style="background-color: black; color: white;">
-    <h1>User List:</h1>
+@extends('layouts.app')
+
+@section('title', 'Lista de Jogadores')
+
+@section('content')
+    <a href="{{ route('players.create') }}">Criar novo player</a>
 
     <table>
         <thead>
@@ -34,5 +31,4 @@
     </table>
 
     {{ $players->links() }}
-</body>
-</html>
+@endsection

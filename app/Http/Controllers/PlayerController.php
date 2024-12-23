@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Player;
 use App\Http\Requests\PlayerRequest;
-use App\Repositories\PlayerRepositoryInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Services\PlayerService;
 
 class PlayerController extends Controller
 {
-    protected $repository;
+    protected $service;
 
-    public function __construct(PlayerRepositoryInterface $repository)
+    public function __construct(PlayerService $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     public function index()
     {
-        $players = $this->repository->listPlayersWithPagination();
+        $players = $this->service->listPlayers();
 
         return view('players.index', [
             'players' => $players,
@@ -31,9 +28,11 @@ class PlayerController extends Controller
         return view('players.create');
     }
 
-    public function store(PlayerRequest $request)
+    // public function store(PlayerRequest $request): string
+    public function store(PlayerRequest $request): string
     {
-        $this->repository->create($request->validated());
+        dd($request);
+        $this->service->createPlayer($request->validated());
         return redirect()->route('players.index')->with('success', 'Jogador criado com sucesso!');
     }
 }
