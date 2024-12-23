@@ -20,7 +20,10 @@ class PlayerController extends Controller
     public function index()
     {
         $players = $this->repository->all();
-        return view('players.index', compact('players'));
+
+        return view('players.index', [
+            'players' => $players,
+        ]);
     }
 
     public function create()
