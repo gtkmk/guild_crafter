@@ -29,7 +29,6 @@ class PlayerController extends Controller
         return view('players.create');
     }
 
-    // public function store(PlayerRequest $request): string
     public function store(StorePlayerRequest $request): string
     {
         $this->service->createPlayer($request->validated());
