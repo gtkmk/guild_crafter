@@ -12,11 +12,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip \
-    gnupg
-
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+    unzip
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -31,7 +27,5 @@ RUN mkdir -p /home/$user/.composer && \
 WORKDIR /var/www
 
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
-
-RUN npm install -g npm@latest
 
 USER $user
