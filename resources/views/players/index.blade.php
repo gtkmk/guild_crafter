@@ -5,6 +5,10 @@
 @section('content')
     <a href="{{ route('players.create') }}">Criar novo player</a>
 
+    @if (session()->has('success'))
+        {{ session('success') }}    
+    @endif
+
     <table>
         <thead>
             <tr>

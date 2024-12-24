@@ -13,7 +13,7 @@ class Player extends Model
     protected $table = 'players';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['name', 'class', 'xp', 'is_confirmed'];
+    protected $fillable = ['name', 'class', 'xp'];
 
     protected static function boot()
     {

@@ -21,10 +21,7 @@ class PlayerService
 
     public function createPlayer(array $data)
     {
-        if (isset($data['name']) && strlen($data['name']) < 3) {
-            throw new \Exception('O nome do jogador deve ter pelo menos 3 caracteres.');
-        }
-
+        dd("aqui");
         return $this->repository->create($data);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PlayerRequest;
+use App\Http\Requests\StorePlayerRequest;
 use App\Services\PlayerService;
 
 class PlayerController extends Controller
@@ -29,10 +30,12 @@ class PlayerController extends Controller
     }
 
     // public function store(PlayerRequest $request): string
-    public function store(PlayerRequest $request): string
+    public function store(StorePlayerRequest $request): string
     {
-        dd($request);
         $this->service->createPlayer($request->validated());
-        return redirect()->route('players.index')->with('success', 'Jogador criado com sucesso!');
+
+        return redirect()
+            ->route('players.index')
+            ->with('success', 'Jogador criado com sucesso!');
     }
 }
