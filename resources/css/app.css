@@ -1,1 +1,43 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    justify-content: top;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+a {
+    color: #0d6efd;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+}
+
+.content {
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}

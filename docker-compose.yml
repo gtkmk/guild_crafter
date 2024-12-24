@@ -10,19 +10,6 @@ services:
         networks:
             - laravel
 
-    npm:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        command: npm run dev
-        working_dir: /var/www/
-        volumes:
-            - ./:/var/www
-        networks:
-            - laravel
-        ports:
-            - "5173:5173"
-
     nginx:
         image: nginx:alpine
         restart: unless-stopped

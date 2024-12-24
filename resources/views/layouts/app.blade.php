@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Guild Crafter')</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
     <style>
+        html, body {
+            height: 100%;
+        }
         body {
             background-color: #121212;
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            padding-top: 60px;
+            justify-content: top;
             align-items: center;
             min-height: 100vh;
             margin: 0;
@@ -27,38 +35,50 @@
             max-width: 900px;
             width: 100%;
         }
+        .content {
+            min-height: 100%;
+            padding-bottom: 60px;
+        }
         footer {
+            position: fixed;
+            bottom: 0;
             width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Meu Projeto</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Meu Projeto</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('players.index') }}">Jogadores</a>
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('players.create') }}">Criar Jogador</a>
+                        <a class="nav-link" href="#">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contato</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
     <div class="container text-center my-4">
         @yield('content')
     </div>
 
-    <footer class="footer bg-dark text-center text-white py-3">
+    <footer class="footer bg-dark text-center text-white py-1">
         <div class="container">
-            <span>© {{ date('Y') }} Meu Projeto Laravel. Todos os direitos reservados.</span>
+            <span class="small">© 2024 Guild Crafter</span>
         </div>
     </footer>
 
