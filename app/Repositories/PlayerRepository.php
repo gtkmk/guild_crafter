@@ -29,9 +29,8 @@ class PlayerRepository implements PlayerRepositoryInterface
         return $player;
     }
 
-    public function delete(string $id): void
+    public function delete(Player $player): void
     {
-        $player = $this->find($id);
         $player->delete();
     }
 }

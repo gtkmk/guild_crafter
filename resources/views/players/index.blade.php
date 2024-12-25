@@ -23,8 +23,13 @@
                     <td>{{ $player->name }}</td>
                     <td>{{ $player->class }}</td>
                     <td>{{ $player->xp }}</td>
-                    <td> 
+                    <td>
                         <a href="{{ route('players.edit', $player->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                        <form action="{{ route('players.destroy', $player->id) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Deletar</button>
+                        </form>
                     </td>
                 </tr>
             @empty

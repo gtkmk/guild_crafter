@@ -52,4 +52,10 @@ class PlayerService
 
         return $this->repository->update($player, $data);
     }
+
+    public function deletePlayer(string $id): void
+    {
+        $player = $this->getPlayer($id);
+        $this->repository->delete($player);
+    }
 }

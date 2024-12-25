@@ -3,6 +3,7 @@
 use App\Http\Controllers\PlayerController;
 use Illuminate\Support\Facades\Route;
 
+Route::delete('/players/{id}', [PlayerController::class, 'destroy'])->name('players.destroy');
 Route::put('/players/{id}', [PlayerController::class, 'update'])->name('players.update');
 Route::get('/players/{id}/edit', [PlayerController::class,'edit'])->name(name: 'players.edit');
 Route::post('/players', [PlayerController::class, 'store'])->name('players.store');

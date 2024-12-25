@@ -54,4 +54,14 @@ class PlayerController extends Controller
             ->route('players.index')
             ->with('success', __('messages.success.player_updated', ['name' => $player->name]));
     }
+
+    public function destroy(string $id)
+    {
+        $player = $this->service->getPlayer($id);
+        $this->service->deletePlayer($id);
+
+        return redirect()
+            ->route('players.index')
+            ->with('success', __('messages.success.player_deleted', ['name' => $player->name]));
+    }
 }

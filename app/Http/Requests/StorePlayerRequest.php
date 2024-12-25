@@ -19,7 +19,7 @@ class StorePlayerRequest extends FormRequest
                 'required',
                 'string',
                 'min:3',
-                'max:100',
+                'max:50',
                 'regex:/^[a-zA-ZÀ-ÿ\s]+$/',
             ],
             'class' => [

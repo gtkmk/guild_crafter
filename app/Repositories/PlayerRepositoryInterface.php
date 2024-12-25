@@ -11,5 +11,5 @@ interface PlayerRepositoryInterface
     public function find(string $id): Player;
     public function create(array $data): Player;
     public function update(Player $player, array $data): Player;
-    public function delete(string $id): void;
+    public function delete(Player $player): void;
 }
