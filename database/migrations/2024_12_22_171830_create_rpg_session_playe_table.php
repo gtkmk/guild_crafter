@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('player_id');
             $table->timestamps();
             $table->foreign('rpg_session_id')->references('id')->on('rpg_session')->onDelete('cascade');
-            $table->foreign('player_id')->references('id')->on('players')->onDelete('cascade');
+            $table->foreign('player_id')->references('id')->on('player')->onDelete('cascade');
             $table->unique(['rpg_session_id', 'player_id']);
         });
     }

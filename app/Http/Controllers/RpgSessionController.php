@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRpgSessionRequest;
 use Illuminate\Http\Request;
 use App\Services\RpgSessionService;
 
@@ -25,6 +26,15 @@ class RpgSessionController extends Controller
 
     public function create()
     {
-        return view('players.create');
+        return view('rpg_sessions.create');
+    }
+
+    public function store(StoreRpgSessionRequest $request)
+    {
+        $rpgSession = $this->service->createRpgSession($request->validated());
+
+        return redirect()
+            ->route('rpg-sessions.index')
+            ->with('success', __('messages.success.rpg_session_created', ['name' => $rpgSession->name]));
     }
 }

@@ -12,4 +12,5 @@ interface RpgSessionRepositoryInterface
     public function create(array $data): RpgSession;
     public function update(RpgSession $player, array $data): RpgSession;
     public function delete(RpgSession $player): void;
+    public function existsByName(string $name): bool;
 }

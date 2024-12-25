@@ -4,6 +4,8 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\RpgSessionController;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/rpg-sessions', [RpgSessionController::class, 'store'])->name('rpg-sessions.store');
+Route::get('/rpg-sessions/create', [RpgSessionController::class, 'create'])->name('rpg-sessions.create');
 Route::get('/rpg-sessions', [RpgSessionController::class, 'index'])->name('rpg-sessions.index');
 
 Route::delete('/players/{id}', [PlayerController::class, 'destroy'])->name('players.destroy');

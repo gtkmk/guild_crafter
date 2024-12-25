@@ -5,10 +5,10 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3">Lista de Sessões de RPG</h1>
-        <a href="#" class="btn btn-primary">Criar nova sessão</a>
-        <!-- href="route('rpg_sessions.create')" -->
-        <!-- href="route('rpg_sessions.edit', $rpgSession->id)" -->
-        <!-- href="route('rpg_sessions.edit', $rpgSession->id) -->
+        <a href="{{ route('rpg-sessions.create') }}" class="btn btn-primary">Criar nova sessão</a>
+        <!-- href="route('rpg-sessions.create')" -->
+        <!-- href="route('rpg-sessions.edit', $rpgSession->id)" -->
+        <!-- href="route('rpg-sessions.edit', $rpgSession->id) -->
     </div>
 
     <table class="table table-striped table-hover">
@@ -23,7 +23,7 @@
             @forelse ($rpgSessions as $rpgSession)
                 <tr>
                     <td>{{ $rpgSession->name }}</td>
-                    <td>{{ \Carbon\Carbon::parse($rpgSession->campaign_date)->format('d/m/Y') }}</td>
+                    <td>{{ $rpgSession->campaign_date }}</td>
                     <td>
                         <a href="#" class="btn btn-primary btn-sm">Confirmar Jogadores</a>
                         <a href="#" class="btn btn-primary btn-sm">Montar Guildas</a>

@@ -10,7 +10,7 @@ class Player extends Model
 {
     use HasFactory; 
 
-    protected $table = 'players';
+    protected $table = 'player';
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';

@@ -10,5 +10,6 @@ return [
         'in' => 'O campo :field deve ser uma das opções válidas.',
         'regex' => 'O campo :field contém caracteres inválidos.',
         'record_not_found' => 'Registro não encontrado.',
+        'unique' => 'O :field já existe, por favor escolha outro nome.',
     ],
 ];

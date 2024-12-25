@@ -21,6 +21,7 @@ class StorePlayerRequest extends FormRequest
                 'min:3',
                 'max:50',
                 'regex:/^[a-zA-ZÀ-ÿ\s]+$/',
+                'unique:player,name',
             ],
             'class' => [
                 'required',
@@ -45,6 +46,7 @@ class StorePlayerRequest extends FormRequest
                 'name.max' => __('validation.messages.max', ['field' => 'nome', 'max' => 100]),
                 'class.in' => __('validation.messages.in', ['field' => 'classe']),
                 'xp.integer' => __('validation.messages.integer', ['field' => 'experiência']),
+                'name.unique' => __('validation.messages.unique', ['field' => 'nome de jogador']),
             ]
         );
     }

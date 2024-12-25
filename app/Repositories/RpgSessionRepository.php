@@ -33,4 +33,9 @@ class RpgSessionRepository implements RpgSessionRepositoryInterface
     {
         $rpgSession->delete();
     }
+
+    public function existsByName(string $name): bool
+    {
+        return RpgSession::where('name', $name)->exists();
+    }
 }

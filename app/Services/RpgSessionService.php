@@ -30,4 +30,13 @@ class RpgSessionService
         }
     }
 
+    public function createRpgSession(array $data)
+    {
+        $rpgSessionData = [
+            'name' => $data['name'],
+            'campaign_date' => $data['campaign_date'],
+        ];
+
+        return $this->repository->create($rpgSessionData);
+    }
 }

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('player', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->length(50);
             $table->enum('class', ['warrior', 'mage', 'archer', 'cleric']);
@@ -20,6 +20,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('player');
     }
 };
