@@ -26,8 +26,19 @@ class Player extends Model
         });
     }
 
-    public function guilds()
+    protected static function getClassTranslationMap(): array
     {
-        return $this->belongsToMany(Guild::class, 'guild_player', 'player_id', 'guild_id');
+        return [
+            'warrior' => 'Guerreiro',
+            'mage' => 'Mago',
+            'archer' => 'Arqueiro',
+            'cleric' => 'Clérigo',
+        ];
+    }
+
+    public function getTranslatedClass(): string
+    {
+        $classMap = self::getClassTranslationMap();
+        return $classMap[$this->class] ?? $this->class;
     }
 }

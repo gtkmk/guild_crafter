@@ -8,17 +8,6 @@
         <a href="{{ route('players.index') }}" class="btn btn-secondary">Voltar para a lista</a>
     </div>
 
-
-    @if ($errors->any())
-        <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('players.store') }}" method="POST">
         @csrf()
 
@@ -47,17 +36,4 @@
 
         <button type="submit" class="btn btn-primary">Criar</button>
     </form>
-@endsection
-
-@section('scripts')
-    <script>
-        setTimeout(() => {
-            const alert = document.getElementById('error-alert');
-            if (alert) {
-                alert.classList.remove('show');
-                alert.classList.add('fade');
-                setTimeout(() => alert.remove(), 150);
-            }
-        }, 3200);
-    </script>
 @endsection

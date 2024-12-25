@@ -8,22 +8,6 @@
         <a href="{{ route('players.index') }}" class="btn btn-secondary">Voltar para a lista</a>
     </div>
 
-    @if (session()->has('success'))
-        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Sucesso!</strong> {{ session('success') }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('players.update', $player->id) }}" method="POST">
         @csrf
         @method('PUT')

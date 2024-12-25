@@ -8,22 +8,6 @@
         <a href="{{ route('players.create') }}" class="btn btn-primary">Criar novo jogador</a>
     </div>
 
-    @if (session()->has('success'))
-        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Sucesso!</strong> {{ session('success') }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <table class="table table-striped table-hover">
         <thead class="thead-dark">
             <tr>
@@ -52,17 +36,4 @@
     </table>
 
     {{ $players->links() }}
-@endsection
-
-@section('scripts')
-    <script>
-        setTimeout(() => {
-            const alert = document.getElementById('success-alert');
-            if (alert) {
-                alert.classList.remove('show');
-                alert.classList.add('fade');
-                setTimeout(() => alert.remove(), 150);
-            }
-        }, 3200);
-    </script>
 @endsection

@@ -48,6 +48,14 @@
             text-align: center;
             padding: 20px;
         }
+        svg {
+            width: 2rem;
+            height: 2rem;
+        }
+        .relative.z-0.inline-flex.rtl\:flex-row-reverse.shadow-sm.rounded-md {
+            padding-bottom: 50px;
+        }
+
     </style>
 </head>
 <body>
@@ -73,6 +81,22 @@
         </div>
     </nav>
     <div class="container text-center my-4">
+        @if (session()->has('success'))
+            <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Sucesso!</strong> {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         @yield('content')
     </div>
 
@@ -83,6 +107,24 @@
     </footer>
 
     @yield('scripts')
+
+    <script>
+        setTimeout(() => {
+            const successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                successAlert.classList.remove('show');
+                successAlert.classList.add('fade');
+                setTimeout(() => successAlert.remove(), 150);
+            }
+
+            const errorAlert = document.getElementById('error-alert');
+            if (errorAlert) {
+                errorAlert.classList.remove('show');
+                errorAlert.classList.add('fade');
+                setTimeout(() => errorAlert.remove(), 150);
+            }
+        }, 3200);
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2JDzN1SQZog+KN2cP0rHd3ZZlNWKU8l1xT/w1L1sYuNS2EloOfktpZf0YBd" crossorigin="anonymous"></script>
 </body>
