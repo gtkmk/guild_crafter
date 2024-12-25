@@ -35,6 +35,6 @@ class PlayerController extends Controller
 
         return redirect()
             ->route('players.index')
-            ->with('success', 'Jogador criado com sucesso!');
+            ->with('success', __('messages.success.player_created'));
     }
 }

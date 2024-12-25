@@ -21,7 +21,6 @@ class PlayerService
 
     public function createPlayer(array $data)
     {
-        dd("aqui");
         return $this->repository->create($data);
     }
 }
