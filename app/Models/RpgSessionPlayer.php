@@ -12,7 +12,6 @@ class RpgSessionPlayer extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'id',
         'assigned_guild',
         'rpg_session_id ',
         'player_id',

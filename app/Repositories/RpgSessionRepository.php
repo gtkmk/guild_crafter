@@ -16,4 +16,9 @@ class RpgSessionRepository implements RpgSessionRepositoryInterface
     {
         return RpgSession::create($data);
     }
+
+    public function find(string $id): RpgSession
+    {
+        return RpgSession::findOrFail($id);
+    }
 }

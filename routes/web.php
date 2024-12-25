@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\RpgSessionController;
+use App\Http\Controllers\RpgSessionPlayerController;
 use Illuminate\Support\Facades\Route;
+
+Route::post('/rpg-session/{id}/players/confirm/{playerId}', [RpgSessionPlayerController::class, 'confirmPresence'])->name('rpg-session-players.confirm');
+Route::get("/rpg-session/{id}/players", [RpgSessionPlayerController::class, 'listAvailablePlayersForSession'])->name(('rpg-session-players.index'));
 
 Route::post('/rpg-sessions', [RpgSessionController::class, 'store'])->name('rpg-sessions.store');
 Route::get('/rpg-sessions/create', [RpgSessionController::class, 'create'])->name('rpg-sessions.create');
@@ -15,5 +19,5 @@ Route::post('/players', [PlayerController::class, 'store'])->name('players.store
 Route::get('/players/create', [PlayerController::class, 'create'])->name('players.create');
 Route::get('/players', [PlayerController::class, 'index'])->name('players.index');
 
-Route::get('/', [PlayerController::class, 'index'])->name('players.te');
+Route::get('/', [PlayerController::class, 'index'])->name('players.index');
 

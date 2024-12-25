@@ -11,5 +11,6 @@ return [
         'regex' => 'O campo :field contém caracteres inválidos.',
         'record_not_found' => 'Registro não encontrado.',
         'unique' => 'O :field já existe, por favor escolha outro nome.',
+        'player_already_confirmed' => 'Este jogador já está confirmado para esta sessão.',
     ],
 ];

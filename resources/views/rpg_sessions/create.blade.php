@@ -5,7 +5,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3">Criar Nova Sessão de RPG</h1>
-        <a href="{{ route('rpg-sessions.index') }}" class="btn btn-secondary">Voltar para a lista</a>
+        <a href="{{ route('rpg-sessions.index') }}" class="btn btn-primary">Voltar para a lista</a>
     </div>
 
     <form action="{{ route('rpg-sessions.store') }}" method="POST">

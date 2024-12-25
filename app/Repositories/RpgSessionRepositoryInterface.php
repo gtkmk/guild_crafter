@@ -9,4 +9,5 @@ interface RpgSessionRepositoryInterface
 {
     public function paginate(int $perPage = 15): LengthAwarePaginator;
     public function create(array $data): RpgSession;
+    public function find(string $id): RpgSession;
 }
