@@ -28,7 +28,7 @@
                         <form action="{{ route('players.destroy', $player->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Deletar</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este jogador? Caso esteja ele esteja participando de alguma sessão, será permanentemente removido.')">Deletar</button>
                         </form>
                     </td>
                 </tr>

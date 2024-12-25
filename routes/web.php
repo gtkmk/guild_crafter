@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\RpgSessionController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/rpg-sessions', [RpgSessionController::class, 'index'])->name('rpg-sessions.index');
 
 Route::delete('/players/{id}', [PlayerController::class, 'destroy'])->name('players.destroy');
 Route::put('/players/{id}', [PlayerController::class, 'update'])->name('players.update');

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('rpg_session_player', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->smallInteger('assigned guild')->nullable();
+            $table->smallInteger('assigned_guild')->nullable();
             $table->uuid('rpg_session_id');
             $table->uuid('player_id');
             $table->timestamps();

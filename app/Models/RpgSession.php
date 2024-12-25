@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Guild extends Model
+class RpgSession extends Model
 {
-    protected $table = 'guilds';
+    protected $table = 'rpg_session';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['name', 'max_players'];
+    protected $fillable = [
+        'name',
+        'campaign_date'
+    ];
 
     protected static function boot()
     {
@@ -23,8 +27,8 @@ class Guild extends Model
         });
     }
 
-    public function players()
+    public function getFormattedCampaignDate(): string
     {
-        return $this->belongsToMany(Player::class, 'guild_player', 'guild_id', 'player_id');
+        return date_format(new \DateTime($this->campaign_date), 'd/m/Y');
     }
 }

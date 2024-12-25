@@ -11,6 +11,7 @@ class Player extends Model
     use HasFactory; 
 
     protected $table = 'players';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = ['name', 'class', 'xp'];

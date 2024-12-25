@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class GuildPlayer extends Model
+class RpgSessionPlayer extends Model
 {
-    protected $table = 'guild_player';
+    protected $table = 'rpg_session_player';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['guild_id', 'player_id'];
+    protected $fillable = [
+        'id',
+        'assigned_guild',
+        'rpg_session_id ',
+        'player_id',
+    ];
 
     protected static function boot()
     {
