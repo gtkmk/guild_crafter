@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('name')->length(50);
             $table->enum('class', ['warrior', 'mage', 'archer', 'cleric']);
             $table->integer('xp')->unsigned()->default(1)->comment('Experience points (1-100)');
             $table->boolean('is_confirmed')->default(false)->comment('Player confirmation for session');

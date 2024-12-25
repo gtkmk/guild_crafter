@@ -6,19 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
-        Schema::create('game_sessions', function (Blueprint $table) {
+        Schema::create('rpg_session', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('date');
-            $table->enum('status', ['Planejada', 'Em Andamento', 'Finalizada'])->default('Planejada');
+            $table->string('name')->length(100);
+            $table->date('campaign_date');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('game_sessions');
+        Schema::dropIfExists('rpg_session');
     }
 };
