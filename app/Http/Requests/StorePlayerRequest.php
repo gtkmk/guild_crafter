@@ -35,24 +35,10 @@ class StorePlayerRequest extends FormRequest
         ];
     }
 
-    // public function messages(): array
-    // {
-    //     return array_merge(
-    //         Lang::get('validation.messages'),
-    //         [
-    //             'name.regex' => __('validation.regex', ['field' => 'nome']),
-    //             'name.min' => __('validation.min', ['field' => 'nome', 'min' => 3]),
-    //             'name.max' => __('validation.max', ['field' => 'nome', 'max' => 100]),
-    //             'class.in' => __('validation.in', ['field' => 'classe']),
-    //             'xp.integer' => __('validation.integer', ['field' => 'experiência']),
-    //         ]
-    //     );
-    // }
-
     public function messages(): array
     {
         return array_merge(
-            Lang::get('validation.messages'), // Mensagens genéricas do arquivo de tradução
+            Lang::get('validation.messages'),
             [
                 'name.regex' => __('validation.messages.regex', ['field' => 'nome']),
                 'name.min' => __('validation.messages.min', ['field' => 'nome', 'min' => 3]),
@@ -66,7 +52,7 @@ class StorePlayerRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'name' => trim($this->name),
+            'name' => ucwords(strtolower(trim($this->name))),
         ]);
     }
 }

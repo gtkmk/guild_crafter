@@ -9,5 +9,6 @@ return [
         'integer' => 'O campo :field deve ser um número inteiro.',
         'in' => 'O campo :field deve ser uma das opções válidas.',
         'regex' => 'O campo :field contém caracteres inválidos.',
+        'record_not_found' => 'Registro não encontrado.',
     ],
 ];

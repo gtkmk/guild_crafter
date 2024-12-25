@@ -14,13 +14,23 @@
         </div>
     @endif
 
-    <table>
-        <thead>
+    @if ($errors->any())
+        <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
             <tr>
                 <th>Nome</th>
                 <th>Classe</th>
                 <th>Experiência</th>
-                <th>Açõees</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -29,11 +39,13 @@
                     <td>{{ $player->name }}</td>
                     <td>{{ $player->class }}</td>
                     <td>{{ $player->xp }}</td>
-                    <td> - </td>
+                    <td> 
+                        <a href="{{ route('players.edit', $player->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td>Vazio</td>
+                    <td colspan="4" class="text-center">Nenhum jogador encontrado.</td>
                 </tr>
             @endforelse
         </tbody>

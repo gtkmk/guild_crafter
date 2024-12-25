@@ -3,7 +3,11 @@
 @section('title', 'Criar Novo Jogador')
 
 @section('content')
-    <h1>Criar novo jogador</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3">Criar Jogador</h1>
+        <a href="{{ route('players.index') }}" class="btn btn-secondary">Voltar para a lista</a>
+    </div>
+
 
     @if ($errors->any())
         <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -31,7 +35,7 @@
                     <option value="warrior" {{ old('class') == 'warrior' ? 'selected' : '' }}>Guerreiro</option>
                     <option value="mage" {{ old('class') == 'mage' ? 'selected' : '' }}>Mago</option>
                     <option value="archer" {{ old('class') == 'archer' ? 'selected' : '' }}>Arqueiro</option>
-                    <option value="cleric" {{ old('class') == 'cleric' ? 'selected' : '' }}>Curandeiro</option>
+                    <option value="cleric" {{ old('class') == 'cleric' ? 'selected' : '' }}>Clérigo</option>
                 </select>
             </div>
 

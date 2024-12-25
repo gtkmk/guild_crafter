@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PlayerRequest;
 use App\Http\Requests\StorePlayerRequest;
 use App\Services\PlayerService;
 
@@ -17,7 +16,7 @@ class PlayerController extends Controller
 
     public function index()
     {
-        $players = $this->service->listPlayers();
+        $players = $this->service->getPaginate();
 
         return view('players.index', [
             'players' => $players,
@@ -29,12 +28,30 @@ class PlayerController extends Controller
         return view('players.create');
     }
 
-    public function store(StorePlayerRequest $request): string
+    public function store(StorePlayerRequest $request)
     {
-        $this->service->createPlayer($request->validated());
+        $player = $this->service->createPlayer($request->validated());
 
         return redirect()
             ->route('players.index')
-            ->with('success', __('messages.success.player_created'));
+            ->with('success', __('messages.success.player_created', ['name' => $player->name]));
+    }
+
+    public function edit(string $id)
+    {
+        $player = $this->service->getPlayer($id);
+
+        return view('players.edit', [
+            'player' => $player,
+        ]);
+    }
+
+    public function update(StorePlayerRequest $request, string $id)
+    {
+        $player = $this->service->updatePlayer($id, $request->validated());
+
+        return redirect()
+            ->route('players.index')
+            ->with('success', __('messages.success.player_updated', ['name' => $player->name]));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Player;
 use App\Repositories\PlayerRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -14,13 +15,31 @@ class PlayerService
         $this->repository = $repository;
     }
 
-    public function listPlayers(int $perPage = 15): LengthAwarePaginator
+    public function getPaginate(int $perPage = 15): LengthAwarePaginator
     {
-        return $this->repository->listPlayersWithPagination($perPage);
+        return $this->repository->paginate($perPage);
     }
 
     public function createPlayer(array $data)
     {
-        return $this->repository->create($data);
+        $playerData = [
+            'name' => $data['name'],
+            'class' => $data['class'],
+            'xp' => $data['xp'],
+        ];
+
+        return $this->repository->create($playerData);
+    }
+
+    public function getPlayer(string $id): Player
+    {
+        return $this->repository->find($id);
+    }
+
+    public function updatePlayer(string $id, array $data): Player
+    {
+        $player = $this->getPlayer($id);
+
+        return $this->repository->update($player, $data);
     }
 }

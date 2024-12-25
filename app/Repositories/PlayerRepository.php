@@ -7,7 +7,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PlayerRepository implements PlayerRepositoryInterface
 {
-    public function listPlayersWithPagination(int $perPage = 15): LengthAwarePaginator
+    public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return Player::paginate($perPage);
     }
@@ -22,10 +22,10 @@ class PlayerRepository implements PlayerRepositoryInterface
         return Player::create($data);
     }
 
-    public function update(string $id, array $data): Player
+    public function update(Player $player, array $data): Player
     {
-        $player = $this->find($id);
         $player->update($data);
+
         return $player;
     }
 
