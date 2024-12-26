@@ -49,4 +49,9 @@ class Player extends Model
             $player->class = $player->getTranslatedClass();
         }
     }
+
+    public function rpgSessionPlayers()
+    {
+        return $this->hasMany(RpgSessionPlayer::class, 'player_id', 'id');
+    }
 }

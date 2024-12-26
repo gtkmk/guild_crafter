@@ -8,23 +8,32 @@ use App\Models\RpgSessionPlayer;
 use App\Repositories\PlayerRepositoryInterface;
 use App\Repositories\RpgSessionPlayerRepositoryInterface;
 use App\Repositories\RpgSessionRepositoryInterface;
+use App\Services\Strategies\BalanceByClassAndXpStrategy;
+use App\Services\Strategies\BalanceByClassStrategy;
+use App\Services\Strategies\BalanceByXpStrategy;
+use App\Services\Strategies\BalanceStrategyInterface;
+use GuildBalancingStrategy;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class RpgSessionPlayerService
 {
     protected $rpgSessionPlayerRepository;
     protected $rpgSessionRepository;
     protected $playerRepository;
+    protected $balanceStrategy;
 
     public function __construct(
         RpgSessionPlayerRepositoryInterface $rpgSessionPlayerRepository,
         RpgSessionRepositoryInterface $rpgSessionRepository,
-        PlayerRepositoryInterface $playerRepository
+        PlayerRepositoryInterface $playerRepository,
+        BalanceByClassAndXpStrategy $balanceByClassAndXpStrategy
     ) {
         $this->rpgSessionPlayerRepository = $rpgSessionPlayerRepository;
         $this->rpgSessionRepository = $rpgSessionRepository;
         $this->playerRepository = $playerRepository;
+        $this->balanceStrategy = $balanceByClassAndXpStrategy;
     }
 
     public function getUnconfirmedPlayers(string $sessionId, int $perPage = 15): LengthAwarePaginator
@@ -87,17 +96,12 @@ class RpgSessionPlayerService
 
     public function getGuildPlayerGroups(string $sessionId): Collection
     {
-        $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getPlayersBySessionId($sessionId);
+        $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getRpgSessionPlayersBySessionId($sessionId);
     
-        $this->translatePlayerClasses($rpgSessionPlayers);
+        Player::translatePlayerClasses($rpgSessionPlayers->pluck('player'));
         $this->assignDefaultGuild($rpgSessionPlayers);
     
         return $this->groupPlayersByGuild($rpgSessionPlayers);
-    }
-    
-    private function translatePlayerClasses(Collection $sessionPlayers): void
-    {
-        Player::translatePlayerClasses($sessionPlayers->pluck('player'));
     }
     
     private function assignDefaultGuild(Collection $sessionPlayers): void
@@ -112,5 +116,72 @@ class RpgSessionPlayerService
     private function groupPlayersByGuild(Collection $sessionPlayers): Collection
     {
         return $sessionPlayers->groupBy('assigned_guild');
+    }
+
+    public function assignPlayersToGuilds(string $sessionId): array
+    {
+        $this->validateSessionExistence($sessionId);
+
+        $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getRpgSessionPlayersBySessionId($sessionId);
+        $players = $rpgSessionPlayers->pluck('Player');
+        $requiredClasses = RpgSessionPlayer::getRequiredClasses();
+    
+        $this->validateClassCounts($players, $requiredClasses);
+    
+        $balancedGuilds = $this->balanceStrategy->balance($players);
+    
+        $this->assignGuildsToPlayers($rpgSessionPlayers, $balancedGuilds);
+    
+        return $balancedGuilds;
+    }
+
+    private function validateClassCounts(Collection $players, array $requiredClasses): void
+    {
+        $classCounts = $this->countPlayerClasses($players, $requiredClasses);
+    
+        foreach ($requiredClasses as $class) {
+            if ($classCounts[$class] < 2) {
+                $translatedClassName = $this->getTranslatedClass($class);
+                throw new \Exception(__('validation.messages.insufficient_players', [
+                    'class' => $translatedClassName,
+                    'count' => $classCounts[$class],
+                ]));
+            }
+        }
+    }
+
+    private function countPlayerClasses(Collection $players, array $requiredClasses): array
+    {
+        $classCounts = array_fill_keys($requiredClasses, 0);
+    
+        foreach ($players as $player) {
+            $classCounts[$player->class]++;
+        }
+    
+        return $classCounts;
+    }
+
+    private function getTranslatedClass(string $class): string
+    {
+        $classMap = Player::getClassTranslationMap();
+        return $classMap[$class] ?? $class;
+    }
+
+    public function assignGuildsToPlayers(Collection $rpgSessionPlayers, array $balancedGuilds): void
+    {
+        foreach ($balancedGuilds as $guild => $players) {
+            foreach ($players as $player) {
+                $rpgSessionPlayer = $rpgSessionPlayers->where('Player', $player)->first();
+                if ($rpgSessionPlayer) {
+                    $rpgSessionPlayer->assigned_guild = $this->getAssignedGuildNumber($guild);
+                    $this->rpgSessionPlayerRepository->updateRecord($rpgSessionPlayer);
+                }
+            }
+        }
+    }
+
+    private function getAssignedGuildNumber(string $guild): int
+    {
+        return $guild === 'guild1' ? 1 : 2;
     }
 }

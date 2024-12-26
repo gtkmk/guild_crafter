@@ -47,6 +47,8 @@ class StorePlayerRequest extends FormRequest
                 'class.in' => __('validation.messages.in', ['field' => 'classe']),
                 'xp.integer' => __('validation.messages.integer', ['field' => 'experiência']),
                 'name.unique' => __('validation.messages.unique', ['field' => 'nome de jogador']),
+                'name.required' => __('validation.messages.required', ['field' => 'nome de jogador']),
+                'xp.required' => __('validation.messages.required', ['field' => 'xp do jogador']),
             ]
         );
     }

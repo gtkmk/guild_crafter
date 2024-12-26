@@ -17,7 +17,6 @@ class PlayerFactory extends Factory
             'name' => Str::limit($this->faker->name, 50),
             'class' => $this->faker->randomElement(['warrior', 'mage', 'archer', 'cleric']),
             'xp' => $this->faker->numberBetween(0, 100),
-            'is_confirmed' => $this->faker->boolean,
         ];
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AssignGuildsRequest;
 use App\Services\RpgSessionPlayerService;
-use Illuminate\Http\Request;
+use App\Services\Strategies\ClassBasedBalancingStrategy;
+use Exception;
 
 class RpgSessionPlayerController extends Controller
 {
@@ -55,6 +57,24 @@ class RpgSessionPlayerController extends Controller
 
         return view('rpg_session_players.guilds_index', [
             'guildPlayerGroups' => $guildPlayerGroups,
+            'rpgSessionId' => $rpgSessionId,
         ]);
+    }
+
+    public function assignGuilds(string $rpgSessionId)
+    {
+        try {
+            $this->service->assignPlayersToGuilds($rpgSessionId);
+
+            return redirect()
+                ->route('rpg-session-players.guilds', $rpgSessionId)
+                ->with('success', __('messages.success.player_confirmed'));
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('rpg-session-players.guilds', $rpgSessionId)
+                ->withErrors([
+                    'session' => __($e->getMessage()),
+                ]);
+        }
     }
 }

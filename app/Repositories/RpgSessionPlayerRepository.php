@@ -38,10 +38,15 @@ class RpgSessionPlayerRepository implements RpgSessionPlayerRepositoryInterface
         return RpgSessionPlayer::where('rpg_session_id', $sessionId)->exists();
     }
 
-    public function getPlayersBySessionId(string $sessionId): Collection
+    public function getRpgSessionPlayersBySessionId(string $sessionId): Collection
     {
         return RpgSessionPlayer::with('player')
             ->where('rpg_session_id', $sessionId)
             ->get();
+    }
+
+    public function updateRecord(RpgSessionPlayer $rpgSessionPlayer): void
+    {
+        $rpgSessionPlayer->save();
     }
 }

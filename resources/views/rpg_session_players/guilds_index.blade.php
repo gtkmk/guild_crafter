@@ -3,11 +3,23 @@
 @section('title', 'Jogadores por Guilda')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="h3">Jogadores por Guilda</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3">Montagem de Guildas</h1>
+        <a href="{{ route('rpg-sessions.index') }}" class="btn btn-primary">Voltar para a lista</a>
     </div>
 
-    <!-- Tabela para jogadores sem guilda -->
+    <form method="POST" action="{{ route('rpg-session-players.assign_guilds', $rpgSessionId) }}" class="mb-5">
+        @csrf
+        <div class="text-center">
+            <p>
+                Caso a sessão tenha o número mínimo de jogadores e composição de guildas, você poderá iniciar a sessão com duas guildas equilibradas. Cada guilda precisará ter ao menos um jogador de cada classe (Guerreiro, Arqueiro, Clérigo e Mago) para garantir um jogo equilibrado.
+            </p>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Balancear Guildas</button>
+            </div>
+        </div>
+    </form>
+
     @if ($guildPlayerGroups->has('no_guild'))
         <div class="mb-5 text-center">
             <h2 class="text-danger">Sem Guilda</h2>

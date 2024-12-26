@@ -13,5 +13,6 @@ return [
         'unique' => 'O :field já existe, por favor escolha outro nome.',
         'player_already_confirmed' => 'Este jogador já está confirmado para esta sessão.',
         'session_has_no_players' => 'Nenhum jogador está associado a esta sessão. É necessário ao menos um jogador confirmado.',
+        'insufficient_players' => 'São necessários ao menos 2 jogadores da classe :class. Quantidade atual: :count.',
     ],
 ];
