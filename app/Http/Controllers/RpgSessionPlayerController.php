@@ -16,9 +16,9 @@ class RpgSessionPlayerController extends Controller
 
     public function listAvailablePlayersForSession(string $id)
     {
-        $rpgSessions = $this->service->findNotConfirmedPlayers($id);
+        $rpgSessions = $this->service->getUnconfirmedPlayers($id);
 
-        return view('rpg_session_players.index', [
+        return view('rpg_session_players.available_players', [
             'notConfirmedPlayers' => $rpgSessions,
             'rpgSessionId' => $id,
         ]);
@@ -30,12 +30,29 @@ class RpgSessionPlayerController extends Controller
             $this->service->confirmPlayerPresence($rpgSessionId, $playerId);
 
             return redirect()
-                ->route('rpg-session-players.index', $rpgSessionId)
-                ->with('success', 'Jogador confirmado para a sessão!');
+                ->route('rpg-session-players.available_players', $rpgSessionId)
+                ->with('success', __('messages.success.player_confirmed'));
         } catch (\Exception $exception) {
             return redirect()
-                ->route('rpg-session-players.index', $rpgSessionId)
+                ->route('rpg-session-players.available_players', $rpgSessionId)
                 ->withErrors($exception->getMessage());
         }
+    }
+
+    public function guildsIndex(string $rpgSessionId)
+    {
+        if (!$this->service->sessionHasPlayers($rpgSessionId)) {
+            return redirect()
+                ->route('rpg-sessions.index')
+                ->withErrors([
+                    'session' => __('validation.messages.session_has_no_players'),
+                ]);
+        }
+
+        $guildPlayerGroups = $this->service->getGuildPlayerGroups($rpgSessionId);
+
+        return view('rpg_session_players.guilds_index', [
+            'guildPlayerGroups' => $guildPlayerGroups,
+        ]);
     }
 }

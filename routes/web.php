@@ -3,8 +3,9 @@
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\RpgSessionController;
 use App\Http\Controllers\RpgSessionPlayerController;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route; 
 
+Route::get("/rpg-session-players/guilds/{id}", [RpgSessionPlayerController::class, 'guildsIndex'])->name('rpg-session-players.guilds');
 Route::post('/rpg-session/{id}/players/confirm/{playerId}', [RpgSessionPlayerController::class, 'confirmPresence'])->name('rpg-session-players.confirm');
 Route::get("/rpg-session/{id}/players", [RpgSessionPlayerController::class, 'listAvailablePlayersForSession'])->name(('rpg-session-players.index'));
 

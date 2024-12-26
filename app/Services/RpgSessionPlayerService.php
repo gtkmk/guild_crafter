@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Exceptions\PlayerAlreadyConfirmedException;
+use App\Models\Player;
 use App\Models\RpgSessionPlayer;
 use App\Repositories\PlayerRepositoryInterface;
 use App\Repositories\RpgSessionPlayerRepositoryInterface;
 use App\Repositories\RpgSessionRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class RpgSessionPlayerService
 {
@@ -25,16 +27,19 @@ class RpgSessionPlayerService
         $this->playerRepository = $playerRepository;
     }
 
-    public function findNotConfirmedPlayers(string $sessionId, int $perPage = 15): LengthAwarePaginator
+    public function getUnconfirmedPlayers(string $sessionId, int $perPage = 15): LengthAwarePaginator
     {
         $this->rpgSessionRepository->find($sessionId);
+        
+        $players = $this->rpgSessionPlayerRepository->getNotConfirmedPlayers($sessionId, $perPage);
+        Player::translatePlayerClasses($players);
 
-        return $this->rpgSessionPlayerRepository->getNotConfirmedPlayers($sessionId, $perPage);
+        return $players;
     }
 
     public function confirmPlayerPresence(string $sessionId, string $playerId)
     {
-        $this->validateSessionAndPlayer($sessionId, $playerId);
+        $this->checkSessionAndPlayerExistence($sessionId, $playerId);
         $this->checkIfPlayerAlreadyConfirmed($sessionId, $playerId);
 
         $rpgSessionPlayer = $this->createRpgSessionPlayerInstance($sessionId, $playerId);
@@ -42,7 +47,7 @@ class RpgSessionPlayerService
         return $this->savePlayerSessionAssociation($rpgSessionPlayer);
     }
 
-    private function validateSessionAndPlayer(string $sessionId, string $playerId): void
+    private function checkSessionAndPlayerExistence(string $sessionId, string $playerId): void
     {
         $this->rpgSessionRepository->find($sessionId);
         $this->playerRepository->find($playerId);
@@ -68,5 +73,39 @@ class RpgSessionPlayerService
     private function savePlayerSessionAssociation(RpgSessionPlayer $rpgSessionPlayer): RpgSessionPlayer
     {
         return $this->rpgSessionPlayerRepository->createPlayerSessionAssociation($rpgSessionPlayer);
+    }
+
+    public function sessionHasPlayers(string $sessionId): bool
+    {
+        return $this->rpgSessionPlayerRepository->existsSessionPlayerBySessionId($sessionId);
+    }
+
+    public function getGuildPlayerGroups(string $sessionId): Collection
+    {
+        $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getPlayersBySessionId($sessionId);
+    
+        $this->translatePlayerClasses($rpgSessionPlayers);
+        $this->assignDefaultGuild($rpgSessionPlayers);
+    
+        return $this->groupPlayersByGuild($rpgSessionPlayers);
+    }
+    
+    private function translatePlayerClasses(Collection $sessionPlayers): void
+    {
+        Player::translatePlayerClasses($sessionPlayers->pluck('player'));
+    }
+    
+    private function assignDefaultGuild(Collection $sessionPlayers): void
+    {
+        $sessionPlayers->each(function ($sessionPlayer) {
+            if (empty($sessionPlayer->assigned_guild)) {
+                $sessionPlayer->assigned_guild = 'no_guild';
+            }
+        });
+    }
+    
+    private function groupPlayersByGuild(Collection $sessionPlayers): Collection
+    {
+        return $sessionPlayers->groupBy('assigned_guild');
     }
 }

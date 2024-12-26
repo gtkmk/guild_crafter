@@ -37,9 +37,16 @@ class Player extends Model
         ];
     }
 
-    public function getTranslatedClass(): string
+    private function getTranslatedClass(): string
     {
         $classMap = self::getClassTranslationMap();
         return $classMap[$this->class] ?? $this->class;
+    }
+
+    public static function translatePlayerClasses($players): void
+    {
+        foreach ($players as $player) {
+            $player->class = $player->getTranslatedClass();
+        }
     }
 }

@@ -12,5 +12,6 @@ return [
         'record_not_found' => 'Registro não encontrado.',
         'unique' => 'O :field já existe, por favor escolha outro nome.',
         'player_already_confirmed' => 'Este jogador já está confirmado para esta sessão.',
+        'session_has_no_players' => 'Nenhum jogador está associado a esta sessão.',
     ],
 ];

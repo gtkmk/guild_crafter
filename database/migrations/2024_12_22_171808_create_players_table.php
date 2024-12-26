@@ -12,8 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->length(50);
             $table->enum('class', ['warrior', 'mage', 'archer', 'cleric']);
-            $table->integer('xp')->unsigned()->default(1)->comment('Experience points (1-100)');
-            $table->boolean('is_confirmed')->default(false)->comment('Player confirmation for session');
+            $table->integer('xp')->unsigned()->default(1);
             $table->timestamps();
         });
     }

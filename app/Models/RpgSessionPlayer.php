@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class RpgSessionPlayer extends Model
@@ -26,5 +27,15 @@ class RpgSessionPlayer extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
+    }
+
+    public function rpgSession(): HasOne
+    {
+        return $this->hasOne(RpgSession::class, 'id', 'rpg_session_id');
+    }
+
+    public function player()
+    {
+        return $this->belongsTo(Player::class, 'player_id', 'id');
     }
 }

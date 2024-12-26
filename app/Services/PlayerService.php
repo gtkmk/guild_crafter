@@ -18,16 +18,9 @@ class PlayerService
     public function getPaginate(int $perPage = 15): LengthAwarePaginator
     {
         $players = $this->repository->paginate($perPage);
-        $this->translatePlayerClasses($players);
+        Player::translatePlayerClasses($players);
 
         return $players;
-    }
-
-    private function translatePlayerClasses(LengthAwarePaginator $players): void
-    {
-        foreach ($players as $player) {
-            $player->class = $player->getTranslatedClass();
-        }
     }
 
     public function createPlayer(array $data)

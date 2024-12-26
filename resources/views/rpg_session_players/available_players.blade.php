@@ -21,7 +21,7 @@
             @forelse ($notConfirmedPlayers as $player)
                 <tr>
                     <td>{{ $player->name }}</td>
-                    <td>{{ $player->getTranslatedClass() }}</td>
+                    <td>{{ $player->class }}</td>
                     <td>{{ $player->xp }}</td>
                     <td>
                         <form action="{{ route('rpg-session-players.confirm', ['id' => $rpgSessionId, 'playerId' => $player->id]) }}" method="POST" style="display:inline-block;">
