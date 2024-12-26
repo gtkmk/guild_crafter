@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\RpgSession;
 use App\Repositories\RpgSessionRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
