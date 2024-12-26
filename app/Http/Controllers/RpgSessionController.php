@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRpgSessionRequest;
-use Illuminate\Http\Request;
 use App\Services\RpgSessionService;
 
 class RpgSessionController extends Controller
