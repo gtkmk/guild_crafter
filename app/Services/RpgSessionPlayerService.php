@@ -2,20 +2,14 @@
 
 namespace App\Services;
 
-use App\Exceptions\PlayerAlreadyConfirmedException;
 use App\Models\Player;
 use App\Models\RpgSessionPlayer;
 use App\Repositories\PlayerRepositoryInterface;
 use App\Repositories\RpgSessionPlayerRepositoryInterface;
 use App\Repositories\RpgSessionRepositoryInterface;
 use App\Services\Strategies\BalanceByClassAndXpStrategy;
-use App\Services\Strategies\BalanceByClassStrategy;
-use App\Services\Strategies\BalanceByXpStrategy;
-use App\Services\Strategies\BalanceStrategyInterface;
-use GuildBalancingStrategy;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class RpgSessionPlayerService
 {

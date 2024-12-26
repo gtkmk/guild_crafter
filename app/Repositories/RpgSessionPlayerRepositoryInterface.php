@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\RpgSession;
 use App\Models\RpgSessionPlayer;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AssignGuildsRequest;
 use App\Services\RpgSessionPlayerService;
-use App\Services\Strategies\ClassBasedBalancingStrategy;
 use Exception;
 
 class RpgSessionPlayerController extends Controller
