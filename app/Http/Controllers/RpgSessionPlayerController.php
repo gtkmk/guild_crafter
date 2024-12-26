@@ -14,7 +14,7 @@ class RpgSessionPlayerController extends Controller
         $this->service = $service;
     }
 
-    public function listAvailablePlayersForSession(string $id)
+    public function showAvailablePlayers(string $id)
     {
         $rpgSessions = $this->service->getUnconfirmedPlayers($id);
 
@@ -26,17 +26,19 @@ class RpgSessionPlayerController extends Controller
 
     public function confirmPresence(string $rpgSessionId, string $playerId)
     {
-        try {
-            $this->service->confirmPlayerPresence($rpgSessionId, $playerId);
+        $this->service->validateSessionAndPlayerExistence($rpgSessionId, $playerId);
 
+        if ($this->service->isPlayerAlreadyConfirmed($rpgSessionId, $playerId)) {
             return redirect()
                 ->route('rpg-session-players.available_players', $rpgSessionId)
-                ->with('success', __('messages.success.player_confirmed'));
-        } catch (\Exception $exception) {
-            return redirect()
-                ->route('rpg-session-players.available_players', $rpgSessionId)
-                ->withErrors($exception->getMessage());
+                ->withErrors(__('validation.messages.player_already_confirmed'));
         }
+
+        $this->service->confirmPlayerPresence($rpgSessionId, $playerId);
+
+        return redirect()
+            ->route('rpg-session-players.available_players', $rpgSessionId)
+            ->with('success', __('messages.success.player_confirmed'));
     }
 
     public function guildsIndex(string $rpgSessionId)

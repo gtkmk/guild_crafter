@@ -29,7 +29,7 @@ class RpgSessionPlayerService
 
     public function getUnconfirmedPlayers(string $sessionId, int $perPage = 15): LengthAwarePaginator
     {
-        $this->rpgSessionRepository->find($sessionId);
+        $this->validateSessionExistence($sessionId);
         
         $players = $this->rpgSessionPlayerRepository->getNotConfirmedPlayers($sessionId, $perPage);
         Player::translatePlayerClasses($players);
@@ -37,27 +37,32 @@ class RpgSessionPlayerService
         return $players;
     }
 
-    public function confirmPlayerPresence(string $sessionId, string $playerId)
-    {
-        $this->checkSessionAndPlayerExistence($sessionId, $playerId);
-        $this->checkIfPlayerAlreadyConfirmed($sessionId, $playerId);
-
-        $rpgSessionPlayer = $this->createRpgSessionPlayerInstance($sessionId, $playerId);
-
-        return $this->savePlayerSessionAssociation($rpgSessionPlayer);
-    }
-
-    private function checkSessionAndPlayerExistence(string $sessionId, string $playerId): void
+    private function validateSessionExistence(string $sessionId): void
     {
         $this->rpgSessionRepository->find($sessionId);
+    }
+
+    private function validatePlayerExistence(string $playerId): void
+    {
         $this->playerRepository->find($playerId);
     }
 
-    private function checkIfPlayerAlreadyConfirmed(string $sessionId, string $playerId): void
+    public function validateSessionAndPlayerExistence(string $sessionId, string $playerId): void
     {
-        if ($this->rpgSessionPlayerRepository->isPlayerAlreadyConfirmedForSession($sessionId, $playerId)) {
-            throw new \Exception(__('validation.messages.player_already_confirmed'));
-        }
+        $this->validateSessionExistence($sessionId);
+        $this->validatePlayerExistence($playerId);
+    }
+
+    public function isPlayerAlreadyConfirmed(string $sessionId, string $playerId): bool
+    {
+        return $this->rpgSessionPlayerRepository->isPlayerAlreadyConfirmedForSession($sessionId, $playerId);
+    }
+
+    public function confirmPlayerPresence(string $sessionId, string $playerId)
+    {
+        $rpgSessionPlayer = $this->createRpgSessionPlayerInstance($sessionId, $playerId);
+    
+        return $this->savePlayerSessionAssociation($rpgSessionPlayer);
     }
 
     private function createRpgSessionPlayerInstance(string $sessionId, string $playerId): RpgSessionPlayer

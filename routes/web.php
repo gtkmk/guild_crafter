@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/rpg-session-players/guilds/{id}", [RpgSessionPlayerController::class, 'guildsIndex'])->name('rpg-session-players.guilds');
 Route::post('/rpg-session/{id}/players/confirm/{playerId}', [RpgSessionPlayerController::class, 'confirmPresence'])->name('rpg-session-players.confirm');
-Route::get("/rpg-session/{id}/players", [RpgSessionPlayerController::class, 'listAvailablePlayersForSession'])->name(('rpg-session-players.index'));
+Route::get("/rpg-session/{id}/players", [RpgSessionPlayerController::class, 'showAvailablePlayers'])->name(('rpg-session-players.available_players'));
 
 Route::post('/rpg-sessions', [RpgSessionController::class, 'store'])->name('rpg-sessions.store');
 Route::get('/rpg-sessions/create', [RpgSessionController::class, 'create'])->name('rpg-sessions.create');

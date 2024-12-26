@@ -25,7 +25,7 @@
                     <td>{{ $rpgSession->name }}</td>
                     <td>{{ $rpgSession->campaign_date }}</td>
                     <td>
-                        <a href="{{ route('rpg-session-players.index', ['id' => $rpgSession->id]) }}" class="btn btn-primary btn-sm">Confirmar Jogadores</a>
+                        <a href="{{ route('rpg-session-players.available_players', ['id' => $rpgSession->id]) }}" class="btn btn-primary btn-sm">Confirmar Jogadores</a>
                         <a href="{{ route('rpg-session-players.guilds', ['id' => $rpgSession->id]) }}" class="btn btn-primary btn-sm">Montar Guildas</a>
                     </td>
                 </tr>
