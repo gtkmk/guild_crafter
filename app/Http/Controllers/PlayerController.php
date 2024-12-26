@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePlayerRequest;
+use App\Http\Requests\UpdatePlayerRequest;
 use App\Services\PlayerService;
 
 class PlayerController extends Controller
@@ -46,7 +47,7 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function update(StorePlayerRequest $request, string $id)
+    public function update(UpdatePlayerRequest $request, string $id)
     {
         $player = $this->service->updatePlayer($id, $request->validated());
 

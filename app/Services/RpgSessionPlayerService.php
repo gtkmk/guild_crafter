@@ -169,15 +169,25 @@ class RpgSessionPlayerService
 
     public function assignGuildsToPlayers(Collection $rpgSessionPlayers, array $balancedGuilds): void
     {
+        $rpgSessionPlayers->each(function ($rpgSessionPlayer) use ($balancedGuilds) {
+            $player = $rpgSessionPlayer->Player;
+            $guild = $this->getFirstGuildWithPlayer($balancedGuilds, $player);
+            if ($guild) {
+                $rpgSessionPlayer->assigned_guild = $this->getAssignedGuildNumber($guild);
+                $this->rpgSessionPlayerRepository->updateRecord($rpgSessionPlayer);
+            }
+        });
+    }
+
+    private function getFirstGuildWithPlayer(array $balancedGuilds, Player $player): ?string
+    {
         foreach ($balancedGuilds as $guild => $players) {
-            foreach ($players as $player) {
-                $rpgSessionPlayer = $rpgSessionPlayers->where('Player', $player)->first();
-                if ($rpgSessionPlayer) {
-                    $rpgSessionPlayer->assigned_guild = $this->getAssignedGuildNumber($guild);
-                    $this->rpgSessionPlayerRepository->updateRecord($rpgSessionPlayer);
-                }
+            if ($players->contains($player)) {
+                return $guild;
             }
         }
+
+        return null;
     }
 
     private function getAssignedGuildNumber(string $guild): int

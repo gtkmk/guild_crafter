@@ -14,7 +14,11 @@ class Player extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['name', 'class', 'xp'];
+    protected $fillable = [
+        'name',
+        'class',
+        'xp',
+    ];
 
     protected static function boot()
     {

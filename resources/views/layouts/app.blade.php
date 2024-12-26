@@ -96,7 +96,7 @@
         @yield('content')
     </div>
 
-    <footer class="footer bg-dark text-center text-white py-1">
+    <footer class="footer bg-dark text-center text-white py-1 mt-auto">
         <div class="container">
             <span class="small">© 2024 Guild Crafter</span>
         </div>
