@@ -63,11 +63,14 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('rpg-sessions.index') }}" style="font-size: 18px; margin-right: 20px;">Sessões de RPG</a>
+                <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/" style="font-size: 18px; margin-left: 20px;">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('players.index') }}" style="font-size: 18px; margin-left: 20px;">Jogadores</a>
+                        <a class="nav-link active" aria-current="page" href="{{ route('players.index') }}" style="font-size: 18px; margin-left: 20px;">Gerenciar Jogadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('rpg-sessions.index') }}" style="font-size: 18px; margin-right: 120px !important;">Gerenciar Sessões de RPG</a>
                     </li>
                 </ul>
             </div>

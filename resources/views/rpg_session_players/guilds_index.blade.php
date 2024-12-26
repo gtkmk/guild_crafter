@@ -14,9 +14,7 @@
             <p>
                 Caso a sessão tenha o número mínimo de jogadores e composição de guildas, você poderá iniciar a sessão com duas guildas equilibradas. Cada guilda precisará ter ao menos um jogador de cada classe (Guerreiro, Arqueiro, Clérigo e Mago) para garantir um jogo equilibrado.
             </p>
-            <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary">Balancear Guildas</button>
-            </div>
+            <button type="submit" class="btn btn-success">Balancear Guildas</button>
         </div>
     </form>
 
@@ -51,7 +49,6 @@
         </div>
     @endif
 
-    <!-- Tabelas das guildas lado a lado -->
     <div class="row">
         @foreach ($guildPlayerGroups as $guild => $players)
             @if ($guild !== 'no_guild')

@@ -69,7 +69,7 @@ class RpgSessionPlayerController extends Controller
             return redirect()
                 ->route('rpg-session-players.guilds', $rpgSessionId)
                 ->with('success', __('messages.success.player_confirmed'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()
                 ->route('rpg-session-players.guilds', $rpgSessionId)
                 ->withErrors([

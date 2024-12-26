@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Editar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
     </form>
 @endsection
 

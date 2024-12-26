@@ -24,7 +24,7 @@
                     <td>{{ $player->class }}</td>
                     <td>{{ $player->xp }}</td>
                     <td>
-                        <a href="{{ route('players.edit', $player->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                        <a href="{{ route('players.edit', $player->id) }}" class="btn btn-warning btn-sm">Editar</a>
                         <form action="{{ route('players.destroy', $player->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')

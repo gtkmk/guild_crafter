@@ -34,6 +34,6 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Criar</button>
+        <button type="submit" class="btn btn-success">Criar</button>
     </form>
 @endsection

@@ -23,6 +23,6 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Criar Sessão</button>
+        <button type="submit" class="btn btn-success">Criar</button>
     </form>
 @endsection
