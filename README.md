@@ -5,9 +5,9 @@ Disponível pelo link abaixo:
 
 [http://crafter.web201.uni5.net/](http://crafter.web201.uni5.net/)
 
-###**Atenção:**### Por não possuir certificado, e talvez por ser uma aplicação Laravel, o site está sendo visto como malicioso. Ao menos no meu caso, foi necessário pausar a proteção do antivírus.
+**Atenção:** Por não possuir certificado, e talvez por ser uma aplicação Laravel, o site está sendo visto como malicioso. Ao menos no meu caso, foi necessário pausar a proteção do antivírus.
 
-###**Fique atento ao link.**### Certifique-se que não foi redirecionado por motivos citados acima. Garanta que a URL tenha *.web201*.
+**Fique atento ao link.** Certifique-se que não foi redirecionado por motivos citados acima. Garanta que a URL tenha *.web201*.
 
 # Setup Docker Laravel 11 com PHP 8.3
 
