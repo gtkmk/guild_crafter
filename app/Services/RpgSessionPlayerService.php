@@ -8,6 +8,7 @@ use App\Repositories\PlayerRepositoryInterface;
 use App\Repositories\RpgSessionPlayerRepositoryInterface;
 use App\Repositories\RpgSessionRepositoryInterface;
 use App\Services\Strategies\BalanceByClassAndXpStrategy;
+use App\Services\Validation\GuildValidator;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -17,16 +18,19 @@ class RpgSessionPlayerService
     protected $rpgSessionRepository;
     protected $playerRepository;
     protected $balanceStrategy;
+    private $guildValidator;
 
     public function __construct(
         RpgSessionPlayerRepositoryInterface $rpgSessionPlayerRepository,
         RpgSessionRepositoryInterface $rpgSessionRepository,
         PlayerRepositoryInterface $playerRepository,
-        BalanceByClassAndXpStrategy $balanceByClassAndXpStrategy
+        BalanceByClassAndXpStrategy $balanceByClassAndXpStrategy,
+        GuildValidator $guildValidator,
     ) {
         $this->rpgSessionPlayerRepository = $rpgSessionPlayerRepository;
         $this->rpgSessionRepository = $rpgSessionRepository;
         $this->playerRepository = $playerRepository;
+        $this->guildValidator = $guildValidator;
         $this->balanceStrategy = $balanceByClassAndXpStrategy;
     }
 
@@ -125,54 +129,13 @@ class RpgSessionPlayerService
         $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getRpgSessionPlayersBySessionId($sessionId);
         $players = $rpgSessionPlayers->pluck('Player');
 
-        $this->validateClassCounts($players);
+        $this->guildValidator->validate($players, $playersPerGuild);
 
         $balancedGuilds = $this->balanceStrategy->balance($players, $playersPerGuild);
 
         $this->assignGuildsToPlayers($rpgSessionPlayers, $balancedGuilds);
 
         return $balancedGuilds;
-    }
-
-    private function validateClassCounts(Collection $players): void
-    {
-        $classCounts = $this->countPlayerClasses($players);
-
-        if ($classCounts['cleric'] < 1) {
-            throw new \Exception(__('validation.messages.insufficient_players', [
-                'class' => $this->getTranslatedClass('cleric'),
-            ]));
-        }
-
-        if ($classCounts['warrior'] < 1) {
-            throw new \Exception(__('validation.messages.insufficient_players', [
-                'class' => $this->getTranslatedClass('warrior'),
-            ]));
-        }
-
-        if ($classCounts['mage'] + $classCounts['archer'] < 1) {
-            $archerOrMage = $this->getTranslatedClass('archer') + " ou " + $this->getTranslatedClass('mage');
-            throw new \Exception(__('validation.messages.insufficient_players', [
-                'class' => $archerOrMage,
-            ]));
-        }
-    }
-
-    private function countPlayerClasses(Collection $players): array
-    {
-        $classCounts = array_fill_keys(RpgSessionPlayer::getRequiredClasses(), 0);
-
-        foreach ($players as $player) {
-            $classCounts[$player->class]++;
-        }
-
-        return $classCounts;
-    }
-
-    private function getTranslatedClass(string $class): string
-    {
-        $classMap = Player::getClassTranslationMap();
-        return $classMap[$class] ?? $class;
     }
 
     public function assignGuildsToPlayers(Collection $rpgSessionPlayers, array $balancedGuilds): void

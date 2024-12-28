@@ -31,31 +31,33 @@ class Player extends Model
         });
     }
 
-    protected static function getClassTranslationMap(): array
+    public function rpgSessionPlayers()
     {
-        return [
+        return $this->hasMany(RpgSessionPlayer::class, 'player_id', 'id');
+    }
+
+    private static function getClassTranslation(string $class): string
+    {
+        $classMap = [
             'warrior' => 'Guerreiro',
             'mage' => 'Mago',
             'archer' => 'Arqueiro',
             'cleric' => 'Clérigo',
         ];
+
+        return $classMap[$class] ?? $class;
     }
 
-    private function getTranslatedClass(): string
+    public static function translatePlayerClasses($players): array
     {
-        $classMap = self::getClassTranslationMap();
-        return $classMap[$this->class] ?? $this->class;
+        return $players->map(function ($player) {
+            $player->class = self::getClassTranslation($player->class);
+            return $player;
+        })->toArray();
     }
 
-    public static function translatePlayerClasses($players): void
+    public static function translateClass(string $class): string
     {
-        foreach ($players as $player) {
-            $player->class = $player->getTranslatedClass();
-        }
-    }
-
-    public function rpgSessionPlayers()
-    {
-        return $this->hasMany(RpgSessionPlayer::class, 'player_id', 'id');
+        return self::getClassTranslation($class);
     }
 }
