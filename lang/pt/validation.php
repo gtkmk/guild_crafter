@@ -15,5 +15,7 @@ return [
         'session_has_no_players' => 'Nenhum jogador está associado a esta sessão. É necessário ao menos um jogador confirmado.',
         'insufficient_players' => 'São necessários ao menos 1 jogador da classe :class para cada guilda.',
         'minimum_players_per_guild' => 'São necessários ao menos 3 jogadores para formar uma guilda.',
+        'players_per_guild_exceeds_total' => 'O número de jogadores por guilda (:playersPerGuild) não pode ser maior que o total de jogadores disponíveis (:totalPlayers).',
+        'player_not_found_in_session' => 'O jogador :player nao está associado a sessão.',
     ],
 ];

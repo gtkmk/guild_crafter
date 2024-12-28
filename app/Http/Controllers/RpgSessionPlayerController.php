@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AssignGuildsRequest;
 use App\Services\RpgSessionPlayerService;
 use Exception;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class RpgSessionPlayerController extends Controller
         ]);
     }
 
-    public function assignGuilds(string $rpgSessionId, Request $request)
+    public function assignGuilds(string $rpgSessionId, AssignGuildsRequest $request)
     {
         try {
             $playersPerGuild = $request->input('playersPerGuild');

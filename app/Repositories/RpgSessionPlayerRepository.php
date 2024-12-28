@@ -51,6 +51,13 @@ class RpgSessionPlayerRepository implements RpgSessionPlayerRepositoryInterface
             ->update(['assigned_guild' => null]);
     }
 
+    public function findPlayerInSession(string $sessionId, $player): ?RpgSessionPlayer
+    {
+        return RpgSessionPlayer::where('rpg_session_id', $sessionId)
+            ->where('player_id', $player->id)
+            ->first();
+    }
+
     public function updateRecord(RpgSessionPlayer $rpgSessionPlayer): void
     {
         $rpgSessionPlayer->save();

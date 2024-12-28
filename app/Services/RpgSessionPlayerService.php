@@ -9,6 +9,7 @@ use App\Repositories\RpgSessionPlayerRepositoryInterface;
 use App\Repositories\RpgSessionRepositoryInterface;
 use App\Services\Strategies\BalanceByClassAndXpStrategy;
 use App\Services\Validation\GuildValidator;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -117,44 +118,66 @@ class RpgSessionPlayerService
     }
 
     public function assignPlayersToGuilds(string $sessionId, int $playersPerGuild): array
-    {
-        if ($playersPerGuild < 3) {
-            throw new \Exception(__('validation.messages.minimum_players_per_guild', ['min' => 3]));
-        }
-
+    {    
         $this->validateSessionExistence($sessionId);
-
-        $this->rpgSessionPlayerRepository->resetAssignedGuildsForSession($sessionId);
-
-        $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getRpgSessionPlayersBySessionId($sessionId);
-        $players = $rpgSessionPlayers->pluck('Player');
-
+    
+        $players = $this->fetchSessionPlayers($sessionId);
+    
         $this->guildValidator->validate($players, $playersPerGuild);
 
-        $balancedGuilds = $this->balanceStrategy->balance($players, $playersPerGuild);
-
-        $this->assignGuildsToPlayers($rpgSessionPlayers, $balancedGuilds);
-
+        $this->resetSessionGuildAssignments($sessionId);
+    
+        $balancedGuilds = $this->balancePlayersIntoGuilds($players, $playersPerGuild);
+    
+        $this->persistGuildAssignments($sessionId, $players, $balancedGuilds);
+    
         return $balancedGuilds;
     }
-
-    public function assignGuildsToPlayers(Collection $rpgSessionPlayers, array $balancedGuilds): void
+    
+    private function resetSessionGuildAssignments(string $sessionId): void
     {
-        foreach ($balancedGuilds as $guild => $players) {
-            foreach ($players as $player) {
-                $rpgSessionPlayer = $rpgSessionPlayers->firstWhere('Player', $player);
+        $this->rpgSessionPlayerRepository->resetAssignedGuildsForSession($sessionId);
+    }
 
-                if ($rpgSessionPlayer) {
-                    $rpgSessionPlayer->assigned_guild = $this->getAssignedGuildNumber($guild);
+    private function fetchSessionPlayers(string $sessionId): Collection
+    {
+        $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getRpgSessionPlayersBySessionId($sessionId);
+        return $rpgSessionPlayers->pluck('Player');
+    }
 
-                    $this->rpgSessionPlayerRepository->updateRecord($rpgSessionPlayer);
-                }
+    private function balancePlayersIntoGuilds(Collection $players, int $playersPerGuild): array
+    {
+        return $this->balanceStrategy->balance($players, $playersPerGuild);
+    }
+
+    private function persistGuildAssignments(string $sessionId, Collection $players, array $balancedGuilds): void
+    {
+        foreach ($balancedGuilds as $guildKey => $assignedPlayers) {
+            $guildNumber = $this->defineGuildNumber($guildKey);
+
+            foreach ($assignedPlayers as $player) {
+                $this->assignPlayerToGuild($sessionId, $player, $guildNumber);
             }
         }
     }
 
-    private function getAssignedGuildNumber(string $guild): int
+    private function defineGuildNumber(string $guildKey): int
     {
-        return $guild === 'guild1' ? 1 : 2;
+        return match ($guildKey) {
+            'guild1' => 1,
+            'guild2' => 2,
+        };
+    }
+
+    private function assignPlayerToGuild(string $sessionId, $player, int $guildNumber): void
+    {
+        $sessionPlayer = $this->rpgSessionPlayerRepository->findPlayerInSession($sessionId, $player);
+
+        if (!$sessionPlayer) {
+            throw new Exception(__('validation.messages.player_not_found_in_session', ['player' => $player->name]));
+        }
+
+        $sessionPlayer->assigned_guild = $guildNumber;
+        $this->rpgSessionPlayerRepository->updateRecord($sessionPlayer);
     }
 }
