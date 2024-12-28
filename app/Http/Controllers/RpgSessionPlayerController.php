@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\RpgSessionPlayerService;
 use Exception;
+use Illuminate\Http\Request;
 
 class RpgSessionPlayerController extends Controller
 {
@@ -59,10 +60,12 @@ class RpgSessionPlayerController extends Controller
         ]);
     }
 
-    public function assignGuilds(string $rpgSessionId)
+    public function assignGuilds(string $rpgSessionId, Request $request)
     {
         try {
-            $this->service->assignPlayersToGuilds($rpgSessionId);
+            $playersPerGuild = $request->input('playersPerGuild');
+
+            $this->service->assignPlayersToGuilds($rpgSessionId, $playersPerGuild);
 
             return redirect()
                 ->route('rpg-session-players.guilds', $rpgSessionId)

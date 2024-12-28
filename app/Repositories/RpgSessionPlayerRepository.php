@@ -12,9 +12,9 @@ class RpgSessionPlayerRepository implements RpgSessionPlayerRepositoryInterface
     public function getNotConfirmedPlayers(string $sessionId, int $perPage = 15): LengthAwarePaginator
     {
         return Player::whereNotIn('id', function ($query) use ($sessionId) {
-                $query->select('player_id')
-                    ->from('rpg_session_player')
-                    ->where('rpg_session_id', $sessionId);
+            $query->select('player_id')
+                ->from('rpg_session_player')
+                ->where('rpg_session_id', $sessionId);
             })
             ->paginate($perPage);
     }
@@ -25,7 +25,7 @@ class RpgSessionPlayerRepository implements RpgSessionPlayerRepositoryInterface
             ->where('player_id', $playerId)
             ->exists();
     }
-    
+
 
     public function createPlayerSessionAssociation(RpgSessionPlayer $rpgSessionPlayer): RpgSessionPlayer
     {
@@ -43,6 +43,12 @@ class RpgSessionPlayerRepository implements RpgSessionPlayerRepositoryInterface
         return RpgSessionPlayer::with('player')
             ->where('rpg_session_id', $sessionId)
             ->get();
+    }
+
+    public function resetAssignedGuildsForSession(string $sessionId): void
+    {
+        RpgSessionPlayer::where('rpg_session_id', $sessionId)
+            ->update(['assigned_guild' => null]);
     }
 
     public function updateRecord(RpgSessionPlayer $rpgSessionPlayer): void
