@@ -6,5 +6,5 @@ use Illuminate\Support\Collection;
 
 interface BalanceStrategyInterface
 {
-    public function balance(Collection $players): array;
+    public function balance(Collection $players, int $playersPerGuild): array;
 }

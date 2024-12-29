@@ -38,9 +38,4 @@ class RpgSessionPlayer extends Model
     {
         return $this->belongsTo(Player::class, 'player_id', 'id');
     }
-
-    public static function getRequiredClasses()
-    {
-        return ['warrior', 'mage', 'archer', 'cleric'];
-    }
 }

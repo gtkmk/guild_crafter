@@ -16,7 +16,7 @@ Route::get('/rpg-sessions', [RpgSessionController::class, 'index'])->name('rpg-s
 
 Route::delete('/players/{id}', [PlayerController::class, 'destroy'])->name('players.destroy');
 Route::put('/players/{id}', [PlayerController::class, 'update'])->name('players.update');
-Route::get('/players/{id}/edit', [PlayerController::class,'edit'])->name(name: 'players.edit');
+Route::get('/players/{id}/edit', [PlayerController::class,'edit'])->name('players.edit');
 Route::post('/players', [PlayerController::class, 'store'])->name('players.store');
 Route::get('/players/create', [PlayerController::class, 'create'])->name('players.create');
 Route::get('/players', [PlayerController::class, 'index'])->name('players.index');

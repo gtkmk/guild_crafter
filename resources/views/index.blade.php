@@ -28,9 +28,10 @@
                 <br>
                 <h2>Desafios Enfrentados</h2>
                 <p><strong>Relembrar sobre a Estrutura de um Projeto Laravel - </strong>A o iniciar o projeto, percebi que precisava relembrar sobre a estrutura de um projeto Laravel. Isso incluiu entender como funcionam os bons padrões para desenvolver os controllers, models, views e rotas, além de como utilizar os recursos do framework para criar uma aplicação robusta.</p>
-                <p><strong>Algoritimo de Balanceamento - </strong>Outro desafio foi desenvolver um algoritmo de balanceamento que pudesse distribuir os jogadores de forma justa e equilibrada entre as guildas. Isso exigiu sumonar alguns conceitos que estudei na faculdade, que embora não tenha lembrado de nenhum algoritimo em especifico, me ajudou a pensar em uma forma de fazer o balanceamento.</p>
+                <p><strong>Algoritimo de Balanceamento - </strong>Outro desafio foi desenvolver um algoritmo de balanceamento que distribuísse os jogadores de forma justa e equilibrada entre as guildas. Para isso, utilizei o algoritmo Greedy, que se mostrou eficaz na distribuição, embora não garanta uma solução ótima. A possibilidade de o usuário escolher o número de jogadores por guilda adicionou uma complexidade extra, mas consegui adaptar o algoritmo para lidar com essa restrição, garantindo um balanceamento eficiente entre as guildas com base em XP e classe.</p>
                 <p><strong>Tempo - </strong>O oponente principal ao meu ver. Os feriados e as festas de fim de ano garantiram que o prazo que já era apertado, ficasse ainda mais apertado. De qualquer forma, embora tenha muitos pontos de melhorias eu gostei do que entreguei com o tempo que tive.</p>
-                <p>No geral, foi um desafio interessante. Deu para reaprender e aprender muitas coisas novas. De certo modo foi divertido, fazia tempo que não precisava ficar desenhando para entender algo.</p>
+                <p>No geral, foi um desafio interessante. Deu para reaprender e aprender muitas coisas novas. Teve momentos em que eu realmente precisei cavar lá no fundo do cérebro, resgatando as aulas de algoritmo da faculdade, que se mostraram mais úteis do que eu imaginava. Obviamente, também tive que fazer algumas pesquisas, mas ter o conhecimento teórico já ajudou muito. </p>
+                <p>De certo modo, foi divertido! Fazia tempo que não precisava ficar desenhando para entender algo, e confesso que encarei isso como um desafio pessoal.</p>
             </div>
         </div>
     </div>

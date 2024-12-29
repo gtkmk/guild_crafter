@@ -13,5 +13,7 @@ interface RpgSessionPlayerRepositoryInterface
     public function createPlayerSessionAssociation(RpgSessionPlayer $rpgSessionPlayer): RpgSessionPlayer;
     public function existsSessionPlayerBySessionId(string $sessionId): bool;
     public function getRpgSessionPlayersBySessionId(string $sessionId): Collection;
+    public function resetAssignedGuildsForSession(string $sessionId): void;
+    public function findPlayerInSession(string $sessionId, $player): ?RpgSessionPlayer;
     public function updateRecord(RpgSessionPlayer $rpgSessionPlayer): void;
 }
