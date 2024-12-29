@@ -7,7 +7,7 @@ use App\Models\RpgSessionPlayer;
 use App\Repositories\PlayerRepositoryInterface;
 use App\Repositories\RpgSessionPlayerRepositoryInterface;
 use App\Repositories\RpgSessionRepositoryInterface;
-use App\Services\Strategies\BalanceByClassAndXpStrategy;
+use App\Services\Strategies\BalanceByClassAndXpWithGreedyStrategy ;
 use App\Services\Validation\GuildValidator;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -25,14 +25,14 @@ class RpgSessionPlayerService
         RpgSessionPlayerRepositoryInterface $rpgSessionPlayerRepository,
         RpgSessionRepositoryInterface $rpgSessionRepository,
         PlayerRepositoryInterface $playerRepository,
-        BalanceByClassAndXpStrategy $balanceByClassAndXpStrategy,
+        BalanceByClassAndXpWithGreedyStrategy  $balanceByClassAndXpWithGreedyStrategy ,
         GuildValidator $guildValidator,
     ) {
         $this->rpgSessionPlayerRepository = $rpgSessionPlayerRepository;
         $this->rpgSessionRepository = $rpgSessionRepository;
         $this->playerRepository = $playerRepository;
         $this->guildValidator = $guildValidator;
-        $this->balanceStrategy = $balanceByClassAndXpStrategy;
+        $this->balanceStrategy = $balanceByClassAndXpWithGreedyStrategy ;
     }
 
     public function getUnconfirmedPlayers(string $sessionId, int $perPage = 15): LengthAwarePaginator
@@ -118,31 +118,31 @@ class RpgSessionPlayerService
     }
 
     public function assignPlayersToGuilds(string $sessionId, int $playersPerGuild): array
-    {    
+    {
         $this->validateSessionExistence($sessionId);
-    
+
         $players = $this->fetchSessionPlayers($sessionId);
-    
+
         $this->guildValidator->validate($players, $playersPerGuild);
 
         $this->resetSessionGuildAssignments($sessionId);
-    
+
         $balancedGuilds = $this->balancePlayersIntoGuilds($players, $playersPerGuild);
-    
+
         $this->persistGuildAssignments($sessionId, $players, $balancedGuilds);
-    
+
         return $balancedGuilds;
-    }
-    
-    private function resetSessionGuildAssignments(string $sessionId): void
-    {
-        $this->rpgSessionPlayerRepository->resetAssignedGuildsForSession($sessionId);
     }
 
     private function fetchSessionPlayers(string $sessionId): Collection
     {
         $rpgSessionPlayers = $this->rpgSessionPlayerRepository->getRpgSessionPlayersBySessionId($sessionId);
         return $rpgSessionPlayers->pluck('Player');
+    }
+
+    private function resetSessionGuildAssignments(string $sessionId): void
+    {
+        $this->rpgSessionPlayerRepository->resetAssignedGuildsForSession($sessionId);
     }
 
     private function balancePlayersIntoGuilds(Collection $players, int $playersPerGuild): array

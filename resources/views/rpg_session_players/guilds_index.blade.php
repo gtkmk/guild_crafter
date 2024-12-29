@@ -3,7 +3,7 @@
 @section('title', 'Jogadores por Guilda')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3">Montagem de Guildas</h1>
         <a href="{{ route('rpg-sessions.index') }}" class="btn btn-primary">Voltar para a lista</a>
     </div>
@@ -12,7 +12,7 @@
         @csrf
         <div class="text-center">
             <p>
-                Caso a sessão tenha o número mínimo de jogadores e composição de guildas, você poderá iniciar a sessão com duas guildas equilibradas. Cada guilda precisará ter ao menos um jogador de cada classe (Guerreiro, Arqueiro, Clérigo e Mago) para garantir um jogo equilibrado.
+                Dependendo do número de jogadores por guilda, se não for possível criar duas guildas com um número igual de jogadores, apenas uma será formada. Caso o número de jogadores por guilda seja suficiente, serão criadas duas guildas, e cada uma deverá conter um guerreiro, um clérigo, e um mago ou arqueiro (dano a distância).
             </p>
             <div class="form-group">
                 <label for="playersPerGuild">Número de jogadores por guilda:</label>
@@ -20,7 +20,7 @@
                     type="number" 
                     id="playersPerGuild"
                     name="playersPerGuild" 
-                    class="form-control" 
+                    class="form-control w-50 mx-auto" 
                     min="3" 
                     required 
                     placeholder="Digite o número de jogadores por guilda">

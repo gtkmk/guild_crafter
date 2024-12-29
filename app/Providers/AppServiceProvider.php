@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\Strategies\BalanceByClassAndXpStrategy;
+use App\Services\Strategies\BalanceByClassAndXpWithGreedyStrategy ;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\PlayerRepositoryInterface;
 use App\Repositories\PlayerRepository;
@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PlayerRepositoryInterface::class, PlayerRepository::class);
         $this->app->bind(RpgSessionRepositoryInterface::class, RpgSessionRepository::class);
         $this->app->bind(RpgSessionPlayerRepositoryInterface::class, RpgSessionPlayerRepository::class);
-        $this->app->bind(BalanceStrategyInterface::class, BalanceByClassAndXpStrategy::class);
+        $this->app->bind(BalanceStrategyInterface::class, BalanceByClassAndXpWithGreedyStrategy ::class);
         $this->app->bind(GuildValidator::class, function ($app) {
             return new GuildValidator();
         });

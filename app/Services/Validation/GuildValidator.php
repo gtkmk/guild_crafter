@@ -40,9 +40,9 @@ class GuildValidator
         $this->validateMinimumCount($classCounts['cleric'], $requiredCount, 'cleric');
         $this->validateMinimumCount($classCounts['warrior'], $requiredCount, 'warrior');
 
-        $mageAndArcherCount = $classCounts['mage'] + $classCounts['archer'];
+        $mageAndArcherCount = ($classCounts['mage'] ?? 0) + ($classCounts['archer'] ?? 0);
         if ($mageAndArcherCount < $requiredCount) {
-            throw new \Exception(__('validation.messages.insufficient_players', [
+            throw new Exception(__('validation.messages.insufficient_players', [
                 'class' => 'arqueiro ou mago',
             ]));
         }
@@ -51,7 +51,7 @@ class GuildValidator
     private function validateMinimumCount(int $actualCount, int $requiredCount, string $className): void
     {
         if ($actualCount < $requiredCount) {
-            throw new \Exception(__('validation.messages.insufficient_players', [
+            throw new Exception(__('validation.messages.insufficient_players', [
                 'class' => Player::translateClass($className),
             ]));
         }

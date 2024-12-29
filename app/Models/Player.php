@@ -60,4 +60,9 @@ class Player extends Model
     {
         return self::getClassTranslation($class);
     }
+
+    public static function getClasses()
+    {
+        return ['cleric', 'warrior', 'mage', 'archer'];
+    }
 }
