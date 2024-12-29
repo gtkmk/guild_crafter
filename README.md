@@ -11,32 +11,44 @@ Disponível pelo link abaixo:
 
 # Algoritmo de Balanceamento
 
-O algoritmo de balanceamento de jogadores por classe e XP funciona da seguinte maneira:
+O algoritmo de balanceamento de jogadores por classe e XP utiliza uma abordagem **Greedy (Ávida) com Restrições**. Ele funciona da seguinte forma:
 
-**Agrupamento por classe:**
+**Organização dos Jogadores:**
 
-- Inicialmente, todos os jogadores são agrupados de acordo com sua classe.
+- Os jogadores são agrupados por sua classe e ordenados de forma decrescente pelo XP.
 
-**Ordenação por XP:**
+**Composição Mínima:**
 
-- Dentro de cada grupo de classe, os jogadores são classificados em ordem decrescente de XP (experiência).
+- A primeira etapa é garantir que cada guilda tenha pelo menos:
+- 1 Guerreiro
+- 1 Clérigo
+- 1 Mago OU Arqueiro
 
-**Distribuição inicial entre guildas:**
+**Distribuição Alternada:**
 
-- Os jogadores são distribuídos alternadamente entre duas guildas (grupos).
+- A partir da composição mínima, os jogadores restantes são distribuídos nas guildas alternadamente, com a prioridade de balancear o número de jogadores e o XP total entre as guildas.
 
-**Balanceamento por classe:**
+**Balanceamento de XP:**
 
-- Para cada jogador adicionado a uma guilda, O algoritmo verifica se a guilda já possui jogadores da mesma classe.
-- Caso já exista jogador de mesma classe, o jogador com menor XP dessa classe na guilda é identificado.
-- Esse jogador de menor XP é realocado para a guilda oposta.
+- O algoritmo verifica a diferença de XP entre as guildas a cada adição de jogador, tentando manter as guildas o mais equilibradas possível.
 
-**Otimização por XP total:**
+**Respeito ao Número de Jogadores:**
 
-- O processo continua até que todos os jogadores sejam distribuídos e a diferença de XP total entre as duas guildas seja minimizada.
+- Caso o número de jogadores seja menor que duas vezes o número de jogadores por guilda, é gerada apenas uma guilda. Caso contrário, duas guildas são formadas com o número de jogadores igual.
 
-**Quer que desenhe?** Acesse o rascunho abaixo:
-[https://excalidraw.com/](https://excalidraw.com/#json=2SNZOvnFJd99wHOXHKoO7,nzjyStxKW3ufuKhxgVzC3w)
+Essa abordagem garante que as guildas sejam balanceadas de acordo com as classes e o XP, respeitando as restrições impostas, ao mesmo tempo em que distribui os jogadores de maneira eficiente.
+
+## Algoritmo Greedy (Ávido)
+
+O algoritmo Greedy (ou Ávido) é uma forma de otimização que faz escolhas locais ótimas em cada etapa. Ele seleciona a melhor opção disponível no momento, sem considerar as consequências futuras.
+
+**Teoria**
+
+Embora o algoritmo Greedy possa não garantir uma solução global ótima, ele é eficiente em problemas onde soluções locais ótimas levam a um bom resultado geral. As principais propriedades incluem:
+
+- **Escolha Gananciosa:** A melhor opção é escolhida a cada passo, sem revisar decisões anteriores.
+- **Subestrutura Ótima:** A solução global é composta por soluções ótimas locais.
+- **Simplicidade:** O Greedy é mais simples e rápido de implementar do que outros algoritmos mais complexos, tornando-se uma boa escolha em problemas com muitas restrições. Ele minimiza as chances de erros e bugs, mesmo que não seja o mais eficiente, nesse contexto é uma boa escolha.
 
 # Setup Docker Laravel 11 com PHP 8.3
 
